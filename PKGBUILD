@@ -1,19 +1,21 @@
-# Maintainer: Name <email>
+# Maintainer: Linxuan Chen <me@black-desk.cn>
 
 # shellcheck disable=SC2034,2154
 # shellcheck shell=bash
 
-pkgname=package_name
-pkgver=0
+pkgname=linglong-git
+provides=('linglong')
+pkgver=1.3.5.1.r61.gb8750a3
 pkgrel=1
-pkgdesc="package description"
+pkgdesc="a container based package manager"
 arch=('any')
-url="https://github.com/..."
-license=()
-depends=()
-source=("$pkgname::git+https://github.com/...")
+url="https://github.com/linuxdeepin/linglong"
+license=('LGPL-3.0')
+depends=('linglong-box')
+source=("linglong-git::git+https://github.com/linuxdeepin/linglong")
 sha512sums=('SKIP')
 options=(debug)
+
 pkgver() {
         cd "$pkgname" || exit
         git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g;s/v\(.*\)/\1/'
