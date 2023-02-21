@@ -1,0 +1,33 @@
+name: shell checks
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+jobs:
+  shell-checks:
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install shfmt
+        uses: mfinelli/setup-shfmt@v2
+      - name: Run shfmt
+        run: shfmt -w PKGBUILD
+      - name: Generate suggestion by reviewdog
+        uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: shfmt
+          fail_on_error: true
+      - name: Run shellcheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          additional_files: 'PKGBUILD'
