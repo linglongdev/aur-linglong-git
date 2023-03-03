@@ -23,15 +23,15 @@ pkgver() {
 
 build() {
         cd "$pkgname" || exit
-        cmake -B. \
+        cmake -B build \
                 -DCMAKE_BUILD_TYPE=RelWithDebInfo \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCMAKE_INSTALL_SYSCONFDIR=/etc \
                 -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib
-        cmake --build .
+        cmake --build build
 }
 
 package() {
         cd "$pkgname" || exit
-        DESTDIR="$pkgdir" cmake --install .
+        DESTDIR="$pkgdir" cmake --install build
 }
